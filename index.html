@@ -1,454 +1,176 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Prensesim — Affet Beni 💖</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nisa, Affet Beni ❤️</title>
 <style>
-  :root{
-    --bg1: #fff0f6;
-    --bg2: #ffe6f0;
-    --accent: #ff4d88;
-    --soft: rgba(255,255,255,0.8);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Arial;}
-  body{
-    background: linear-gradient(120deg,var(--bg1),var(--bg2));
-    overflow:hidden;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    transition: background 800ms ease;
-  }
+/* Arka plan */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  color: white;
+}
 
-  /* Container */
-  .wrap{
-    width:100%;
-    max-width:980px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0.55));
-    border-radius:18px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.12);
-    padding:28px;
-    position:relative;
-    overflow:hidden;
-  }
+/* Yıldız efekti */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.2; }
+}
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite;
+}
 
-  header{
-    display:flex;
-    gap:18px;
-    align-items:center;
-    justify-content:space-between;
-  }
-  .title{
-    display:flex;
-    gap:14px;
-    align-items:center;
-  }
-  .logo{
-    width:62px;height:62px;border-radius:14px;
-    background:linear-gradient(135deg,#ff9ac4,#ff507f);
-    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;
-    box-shadow:0 6px 18px rgba(255,77,136,0.18);
-    font-size:22px;
-  }
-  h1{margin:0;color:var(--accent);font-size:1.45rem;letter-spacing:0.2px}
+/* Yazı yazma efekti */
+h1 {
+  font-size: 2em;
+  margin-top: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid white;
+  animation: typing 4s steps(30, end), blink .75s step-end infinite;
+}
+@keyframes typing { from { width: 0 } to { width: 100% } }
+@keyframes blink { 50% { border-color: transparent } }
 
-  /* typing area */
-  .lead{
-    margin-top:18px;
-    background:var(--soft);
-    padding:18px;border-radius:12px;color:#333;
-    min-height:110px;
-    line-height:1.5;
-    font-size:1.05rem;
-    white-space:pre-wrap;
-  }
-  .cursor{display:inline-block;width:10px;background:var(--accent);margin-left:6px;height:14px;border-radius:3px;vertical-align:middle;animation:blink 1s steps(2) infinite;}
-  @keyframes blink{50%{opacity:0}}
+/* Butonlar */
+button {
+  padding: 15px 30px;
+  font-size: 1.2em;
+  margin: 20px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+#yesBtn { background-color: #ff4e50; color: white; }
+#noBtn { background-color: #555; color: white; }
 
-  /* buttons */
-  .controls{margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-  .btn{
-    padding:12px 18px;border-radius:12px;border:none;cursor:pointer;font-weight:600;
-    box-shadow:0 8px 20px rgba(0,0,0,0.10);
-    transition:transform 180ms ease, box-shadow 180ms ease;
-    background:linear-gradient(180deg,#ff5fa0,#ff2a73);color:white;
-  }
-  .btn:active{transform:translateY(2px)}
-  .btn.secondary{
-    background:linear-gradient(180deg,#ffd3e6,#ffb6d0);
-    color:#8b0036;
-  }
+/* Kalpler */
+.heart {
+  position: fixed;
+  font-size: 20px;
+  animation: floatUp 3s linear forwards;
+}
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+}
 
-  /* big celebration text */
-  .big-msg{
-    position:absolute;left:50%;top:42%;
-    transform:translate(-50%,-50%) scale(.6);padding:18px 28px;border-radius:14px;
-    background:rgba(255,255,255,0.95);color:var(--accent);font-weight:800;font-size:2.2rem;
-    box-shadow:0 20px 40px rgba(0,0,0,0.12);display:flex;gap:12px;align-items:center;justify-content:center;
-    opacity:0;pointer-events:none;z-index:40;backdrop-filter: blur(6px);
-  }
-  .big-msg.show{animation:pop 480ms cubic-bezier(.2,.9,.25,1) forwards, glow 1400ms infinite alternate}
-  @keyframes pop{100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
-  @keyframes glow{from{text-shadow:0 0 8px rgba(255,77,136,0.3)} to{text-shadow:0 0 28px rgba(255,77,136,0.6)}}
+/* Konfeti */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: red;
+  animation: fall 3s linear forwards;
+}
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
 
-  /* footer marquee */
-  .marquee{position:absolute;left:0;right:0;bottom:8px;text-align:center;font-size:0.95rem;color:#9b2749;opacity:0.95}
-  .marquee .inner{display:inline-block;white-space:nowrap;padding-left:100%;animation:marq 14s linear infinite}
-  @keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-60%)}}
-
-  /* canvas layer */
-  #fx{position:absolute;inset:0;z-index:20;pointer-events:none;display:block}
-
-  /* heart trail style (svg based) */
-  .hint{position:absolute;right:18px;top:18px;background:rgba(255,255,255,0.85);padding:8px 12px;border-radius:12px;color:#8b0036;font-weight:600;box-shadow:0 6px 16px rgba(0,0,0,0.06)}
-  @media (max-width:520px){
-    .big-msg{font-size:1.6rem;padding:12px 18px}
-    h1{font-size:1.15rem}
-    .lead{font-size:0.98rem}
-  }
+/* Yağmur */
+.raindrop {
+  position: fixed;
+  width: 2px;
+  height: 10px;
+  background: #00f;
+  animation: rain 1s linear infinite;
+}
+@keyframes rain {
+  0% { transform: translateY(-10px); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
 </style>
 </head>
 <body>
 
-<div class="wrap" id="wrap">
-  <header>
-    <div class="title">
-      <div class="logo">💌</div>
-      <div>
-        <h1>Prensesim — Affet Beni</h1>
-        <div style="font-size:0.9rem;color:#6b2b46;margin-top:6px">Küçük bir sürpriz: sen çok değerlisin 💖</div>
-      </div>
-    </div>
-    <div class="hint">Fareyle gezin — kalpler izi bırakır</div>
-  </header>
+<h1 id="typedText">Nisa... Beni affeder misin? ❤️</h1>
 
-  <div class="lead" id="lead"></div>
-
-  <div class="controls" style="justify-content:center">
-    <button class="btn" id="btnPeace">Barıştık</button>
-    <button class="btn secondary" id="btnNo">Barışmadık</button>
-  </div>
-
-  <div class="big-msg" id="bigMsg">İyi ki varsın Nisa 💖</div>
-
-  <canvas id="fx"></canvas>
-
-  <div class="marquee"><div class="inner" id="marq">Nisa sen benim için çok özelsin 💖 — Nisa sen benim için çok özelsin 💖 — </div></div>
-</div>
+<button id="yesBtn">Barıştık 💖</button>
+<button id="noBtn">Barışmadık 😢</button>
 
 <script>
-/* ========== SETTINGS ========== */
-const MAX_CONFETTI = 180;
-const MAX_HEARTS = 60;
-const GRAVITY = 0.08;
-
-/* ========== CANVAS SETUP ========== */
-const canvas = document.getElementById('fx');
-const ctx = canvas.getContext('2d');
-let W = canvas.width = innerWidth;
-let H = canvas.height = innerHeight;
-window.addEventListener('resize', ()=>{W=canvas.width=innerWidth;H=canvas.height=innerHeight});
-
-/* ========== PARTICLE CLASSES ========== */
-class Particle {
-  constructor(x,y,vx,vy,size,color,shape,life=Infinity){
-    this.x=x;this.y=y;this.vx=vx;this.vy=vy;this.size=size;this.color=color;this.shape=shape;this.life=life;
-    this.rot = Math.random()*Math.PI*2;
-    this.angular = (Math.random()-0.5)*0.2;
-    this.ttl = life;
-  }
-  update(){
-    this.vy += GRAVITY * (this.shape==='confetti'?0.9:0.12);
-    this.x += this.vx;
-    this.y += this.vy;
-    this.rot += this.angular;
-    if(this.ttl!==Infinity) this.ttl--;
-  }
-  draw(ctx){
-    ctx.save();
-    ctx.translate(this.x,this.y);
-    ctx.rotate(this.rot);
-    if(this.shape==='confetti'){
-      ctx.fillStyle = this.color;
-      ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size*0.6);
-    } else if(this.shape==='heart'){
-      // heart drawn via path
-      const s = this.size/12;
-      ctx.scale(s,s);
-      ctx.fillStyle = this.color;
-      ctx.beginPath();
-      ctx.moveTo(0,0);
-      ctx.bezierCurveTo(0,-3,-6,-8,-12,-3);
-      ctx.bezierCurveTo(-22,2,-12,20,0,28);
-      ctx.bezierCurveTo(12,20,22,2,12,-3);
-      ctx.bezierCurveTo(6,-8,0,-3,0,0);
-      ctx.fill();
-    } else if(this.shape==='star'){
-      ctx.fillStyle = this.color;
-      drawStar(ctx,0,0,this.size,5);
-    } else if(this.shape==='butter'){
-      ctx.fillStyle = this.color;
-      ctx.beginPath();
-      ctx.ellipse(0,0,this.size*1.1,this.size,0,0,Math.PI*2);
-      ctx.fill();
-      ctx.rotate(0.6);
-      ctx.beginPath();
-      ctx.ellipse(0,0,this.size*0.9,this.size*0.7,0,0,Math.PI*2);
-      ctx.fill();
-    }
-    ctx.restore();
-  }
-  alive(){ return (this.ttl===Infinity || this.ttl>0) && this.y < H+200; }
+// Yıldızlar
+for (let i = 0; i < 50; i++) {
+  let star = document.createElement("div");
+  star.classList.add("star");
+  star.style.width = star.style.height = Math.random() * 3 + "px";
+  star.style.top = Math.random() * 100 + "%";
+  star.style.left = Math.random() * 100 + "%";
+  star.style.animationDuration = Math.random() * 3 + 2 + "s";
+  document.body.appendChild(star);
 }
 
-/* helper to draw star */
-function drawStar(ctx,x,y,r,pts){
-  ctx.beginPath();
-  for(let i=0;i<pts;i++){
-    const a = i*(Math.PI*2/pts);
-    const rx = Math.cos(a)*r;
-    const ry = Math.sin(a)*r;
-    ctx.lineTo(rx,ry);
-    const a2 = a + Math.PI/pts;
-    const rx2 = Math.cos(a2)*r*0.5;
-    const ry2 = Math.sin(a2)*r*0.5;
-    ctx.lineTo(rx2,ry2);
-  }
-  ctx.closePath();
-  ctx.fill();
+// Kalp efekti
+function createHeart(x, y) {
+  let heart = document.createElement("div");
+  heart.className = "heart";
+  heart.style.left = x + "px";
+  heart.style.top = y + "px";
+  heart.innerHTML = "💖";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 3000);
 }
 
-/* ========== SYSTEM ========== */
-let particles = [];
-let runningCelebration = false;
-
-/* create confetti burst (physics-like) */
-function burst(x,y,intensity=80){
-  for(let i=0;i<intensity;i++){
-    if(particles.length > 700) break;
-    const angle = Math.random()*Math.PI*2;
-    const speed = Math.random()*6 + 2;
-    const vx = Math.cos(angle)*speed;
-    const vy = Math.sin(angle)*speed - (Math.random()*4+2);
-    const size = Math.random()*10 + 6;
-    const color = pickColor();
-    const shape = Math.random()>0.7 ? 'heart' : (Math.random()>0.5?'confetti':'star');
-    particles.push(new Particle(x + (Math.random()-0.5)*40, y + (Math.random()-0.5)*40, vx, vy, size, color, shape, 300 + Math.random()*200));
+// Konfeti efekti
+function createConfetti() {
+  for (let i = 0; i < 50; i++) {
+    let confetti = document.createElement("div");
+    confetti.className = "confetti";
+    confetti.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.top = Math.random() * window.innerHeight / 2 + "px";
+    confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 3000);
   }
 }
 
-/* helper color picker */
-function pickColor(){
-  const pal = ['#ff4d88','#ffd166','#ff9ac4','#ff6fb5','#ffd1e6','#fff2f8','#ffe6a7'];
-  return pal[Math.floor(Math.random()*pal.length)];
+// Yağmur efekti
+function startRain() {
+  let rainInterval = setInterval(() => {
+    let drop = document.createElement("div");
+    drop.className = "raindrop";
+    drop.style.left = Math.random() * window.innerWidth + "px";
+    document.body.appendChild(drop);
+    setTimeout(() => drop.remove(), 1000);
+  }, 50);
+  setTimeout(() => clearInterval(rainInterval), 3000);
 }
 
-/* continuous gentle rain of hearts upward */
-function spawnUpwards(x,y,amount=10){
-  for(let i=0;i<amount;i++){
-    const vx = (Math.random()-0.5)*1.6;
-    const vy = -(Math.random()*2 + 1.5);
-    const size = Math.random()*16 + 10;
-    particles.push(new Particle(x + (Math.random()-0.5)*40, y + (Math.random()-0.5)*10, vx, vy, size, '#ff6fa3','heart', 160 + Math.random()*120));
+// Barıştık butonu
+document.getElementById("yesBtn").addEventListener("click", () => {
+  createConfetti();
+  for (let i = 0; i < 30; i++) {
+    createHeart(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
   }
-}
-
-/* small buttery butterflies */
-function butterflies(x,y,amount=6){
-  for(let i=0;i<amount;i++){
-    const vx = (Math.random()-0.5)*2;
-    const vy = -(Math.random()*1.5 + 0.8);
-    const size = Math.random()*14 + 8;
-    particles.push(new Particle(x + (Math.random()-0.5)*40, y + (Math.random()-0.5)*20, vx, vy, size, pickColor(),'butter', 260 + Math.random()*160));
-  }
-}
-
-/* animate loop */
-function loop(){
-  ctx.clearRect(0,0,W,H);
-  // slight background parallax stars/gradients can be simulated by canvas if needed (skip heavy)
-  for(let i=particles.length-1;i>=0;i--){
-    const p = particles[i];
-    p.update();
-    p.draw(ctx);
-    if(!p.alive()){
-      particles.splice(i,1);
-    }
-  }
-  requestAnimationFrame(loop);
-}
-loop();
-
-/* ========== UI & EVENTS ========== */
-const btnPeace = document.getElementById('btnPeace');
-const btnNo = document.getElementById('btnNo');
-const bigMsg = document.getElementById('bigMsg');
-const lead = document.getElementById('lead');
-const wrap = document.getElementById('wrap');
-
-/* Typing intro messages (one by one) */
-const lines = [
-  "Nisa...",
-  "Sen benim hayatımın en değerli parçasısın 💖",
-  "İyi ki varsın ve ben seni çok özledim…",
-  "Küçük hatalarım oldu, ama kalbim hep sende.",
-  "Beni affetmeni çok istiyorum."
-];
-let li = 0;
-function typeLine(idx,cb){
-  const text = lines[idx];
-  lead.innerHTML = "";
-  let k=0;
-  const t = setInterval(()=>{
-    lead.innerHTML += text.charAt(k);
-    k++;
-    if(k>=text.length){ clearInterval(t); if(cb) setTimeout(cb,600); }
-  },38);
-}
-function playIntro(){
-  if(li < lines.length){
-    typeLine(li, ()=>{ li++; playIntro(); });
-  }
-}
-playIntro();
-
-/* heart trail on mousemove */
-let mouse = {x:0,y:0};
-window.addEventListener('mousemove', e=>{
-  const rect = wrap.getBoundingClientRect();
-  mouse.x = e.clientX - rect.left;
-  mouse.y = e.clientY - rect.top;
-  // create small heart traces relative to page
-  const globalX = e.clientX;
-  const globalY = e.clientY;
-  if(Math.random() < 0.35){
-    const size = Math.random()*10 + 6;
-    particles.push(new Particle(globalX + (Math.random()-0.5)*10, globalY + (Math.random()-0.5)*10, (Math.random()-0.5)*0.6, - (Math.random()*0.5 + 0.6), size, '#ffadb9','heart', 80));
-  }
+  alert("Barıştık! 💖 Seni çok seviyorum Nisa!");
 });
 
-/* clicking peace triggers celebration sequence */
-btnPeace.addEventListener('click', async ()=> {
-  if(runningCelebration) return;
-  runningCelebration = true;
-
-  // 1) background shift + small pulse
-  document.body.style.background = 'linear-gradient(120deg,#fff0f6,#ffe1f0)';
-  wrap.animate([{transform:'scale(1)'},{transform:'scale(1.01)'},{transform:'scale(1)'}],{duration:700, easing:'ease-in-out'});
-
-  // 2) text reveal with pop
-  bigMsg.classList.add('show');
-
-  // 3) staggered bursts
-  const cx = innerWidth/2;
-  const cy = innerHeight/2 - 60;
-  for(let i=0;i<4;i++){
-    setTimeout(()=> burst(cx + (Math.random()-0.5)*160, cy + (Math.random()-0.5)*80, 60 - i*8), i*260);
-    setTimeout(()=> spawnUpwards(cx + (Math.random()-0.5)*160, cy + 140, 18), i*260 + 120);
-    setTimeout(()=> butterflies(cx + (Math.random()-0.5)*120, cy + 120, 6), i*260 + 180);
-  }
-
-  // 4) small screen shake
-  const shake = wrap.animate([
-    {transform:'translateY(0)'},
-    {transform:'translateY(-6px)'},
-    {transform:'translateY(0)'}
-  ],{duration:450, iterations:3});
-  shake.onfinish = ()=>{ /* nothing */ }
-
-  // 5) gentle confetti tail for a bit
-  const tail = setInterval(()=>{ burst(Math.random()*innerWidth, -20, 8); }, 240);
-  setTimeout(()=> { clearInterval(tail); }, 5200);
-
-  // 6) keep big message visible for a while then keep it
-  setTimeout(()=> {
-    bigMsg.classList.remove('show');
-    // keep a subtle final message centered for a short while
-    bigMsg.style.opacity = 1;
-    bigMsg.classList.add('show');
-    // stop running state after small timeout
-    setTimeout(()=> { runningCelebration = false; }, 800);
-  }, 4000);
+// Barışmadık butonu (kaçar)
+let noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseover", () => {
+  noBtn.style.position = "absolute";
+  noBtn.style.left = Math.random() * (window.innerWidth - noBtn.offsetWidth) + "px";
+  noBtn.style.top = Math.random() * (window.innerHeight - noBtn.offsetHeight) + "px";
+});
+noBtn.addEventListener("click", () => {
+  startRain();
+  alert("Ama... Lütfen bir daha düşün 😢");
 });
 
-/* Barışmadık button - flees on hover/click, triggers rain */
-function moveNoButton(){
-  const pad = 24;
-  const w = window.innerWidth - 120;
-  const h = window.innerHeight - 120;
-  const nx = Math.random()*w + pad;
-  const ny = Math.random()*h + pad;
-  btnNo.style.left = nx + 'px';
-  btnNo.style.top = ny + 'px';
-  btnNo.style.position = 'absolute';
-}
-btnNo.addEventListener('mouseenter', ()=>{
-  // move quickly away
-  moveNoButton();
-  // gentle sad rain (small droplets as confetti-like blue)
-  for(let i=0;i<24;i++){
-    particles.push(new Particle(Math.random()*innerWidth, -10 - Math.random()*200, (Math.random()-0.5)*0.6, Math.random()*2+2, Math.random()*6+4, '#a3d2ff','confetti', 180));
-  }
-});
-
-/* small touch: if user clicks on big message it fades (friendly) */
-bigMsg.addEventListener('click', ()=> {
-  bigMsg.classList.remove('show');
-});
-
-/* accessibility: mobile tap for btnNo -> move */
-btnNo.addEventListener('click', ()=> moveNoButton());
-
-/* prevent overwhelm: cap particles array */
-setInterval(()=> {
-  if(particles.length > 1200) particles.splice(0, particles.length - 900);
-},1000);
-
-/* Final small polish: typing-of-footer message loop (restart marquee) */
-const marq = document.getElementById('marq');
-marq.addEventListener('animationiteration', ()=>{ /* noop */ });
-
-/* light hint on load: flash title then resume intro if needed */
-setTimeout(()=>{ document.querySelector('h1').animate([{opacity:0.9, transform:'translateY(-4px)'},{opacity:1, transform:'translateY(0)'}],{duration:600}) },400);
-
-/* friendly fallback: if canvas lost context, show simple pop */
-if(!ctx){alert('Grafik desteği bulunamadı, sade versiyon yüklendi.');}
-
-</script>
-</body>
-</html>            ctx.bezierCurveTo(p.x - p.size, p.y + p.size, p.x, p.y + p.size * 1.5, p.x, p.y + p.size * 2);
-            ctx.bezierCurveTo(p.x, p.y + p.size * 1.5, p.x + p.size, p.y + p.size, p.x + p.size, p.y);
-            ctx.bezierCurveTo(p.x + p.size, p.y - p.size / 2, p.x, p.y - p.size / 2, p.x, p.y);
-            ctx.fill();
-        }
-        p.y += p.speed;
-        if (p.y > canvas.height) p.y = -p.size;
-    });
-}
-
-function animate() {
-    drawPieces();
-    requestAnimationFrame(animate);
-}
-
-animate();
-
-// 🎯 Buton olayları
-const mesaj = document.getElementById("mesaj");
-document.getElementById("baristik").addEventListener("click", () => {
-    createPieces();
-    mesaj.classList.add("show");
-    document.body.style.background = "linear-gradient(45deg, #ff9a9e, #fad0c4)";
-});
-
-const barismadik = document.getElementById("barismadik");
-barismadik.addEventListener("mouseover", () => {
-    barismadik.style.position = "absolute";
-    barismadik.style.left = Math.random() * (window.innerWidth - 100) + "px";
-    barismadik.style.top = Math.random() * (window.innerHeight - 50) + "px";
+// Fare hareketinde kalp izi
+document.addEventListener("mousemove", e => {
+  createHeart(e.pageX, e.pageY);
 });
 </script>
 
