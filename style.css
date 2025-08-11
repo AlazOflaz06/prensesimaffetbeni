@@ -1,0 +1,84 @@
+/* Arka plan animasyonu */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(270deg, #ff9a9e, #fad0c4, #ffd1ff);
+    background-size: 600% 600%;
+    animation: gradientBG 20s ease infinite;
+    overflow-x: hidden;
+    text-align: center;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Başlık yazısı */
+h1 {
+    color: white;
+    font-size: 3em;
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+/* Butonlar */
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 50px;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+#yesBtn {
+    background: #ff4e50;
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 78, 80, 0.5);
+}
+
+#yesBtn:hover {
+    background: #ff6b6b;
+    transform: scale(1.1);
+}
+
+#noBtn {
+    background: #4b6cb7;
+    color: white;
+    box-shadow: 0 4px 15px rgba(75, 108, 183, 0.5);
+}
+
+#noBtn:hover {
+    background: #3a5a99;
+}
+
+/* Kalp animasyonu */
+.heart {
+    position: fixed;
+    font-size: 24px;
+    animation: floatUp 3s ease forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-200px) scale(1.5); opacity: 0; }
+}
+
+/* Parlama efekti */
+.flash {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: white;
+    opacity: 0;
+    animation: flashAnim 0.5s ease;
+    pointer-events: none;
+}
+
+@keyframes flashAnim {
+    0% { opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0; }
+}
