@@ -1,108 +1,126 @@
-<!DOCTYPE html><html lang="tr">
+<!DOCTYPE html>
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nisa ile Barışma</title>
+<title>Barışma Sitesi</title>
 <style>
     body {
         margin: 0;
-        background-color: #ffeff5;
-        font-family: 'Segoe UI', sans-serif;
+        padding: 0;
+        background: #ffe6f0;
         overflow: hidden;
+        font-family: sans-serif;
         text-align: center;
     }
     h1 {
-        font-size: 2em;
-        color: #ff4b6e;
         margin-top: 50px;
-        animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-        100% { transform: scale(1); }
-    }
-    #message {
-        max-width: 90%;
-        margin: 20px auto;
-        font-size: 1.1em;
-        color: #333;
-        white-space: pre-line;
-        text-align: left;
-        background: rgba(255,255,255,0.8);
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        font-size: 2.5rem;
+        color: #ff4d88;
     }
     button {
-        background: #ff4b6e;
-        color: white;
-        padding: 10px 20px;
+        padding: 15px 30px;
+        font-size: 1.2rem;
         border: none;
-        border-radius: 25px;
-        font-size: 1.1em;
+        border-radius: 50px;
+        background: #ff4d88;
+        color: white;
         cursor: pointer;
-        margin: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         transition: 0.3s;
     }
     button:hover {
-        background: #ff1f52;
+        transform: scale(1.1);
+        background: #ff1a66;
     }
-    .heart {
+    .celebrate-text {
         position: fixed;
-        width: 20px;
-        height: 20px;
-        background: red;
-        transform: rotate(45deg);
-        animation: fall 5s linear forwards;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 4rem;
+        color: #ff1a66;
+        font-weight: bold;
+        animation: glow 1s infinite alternate;
+        display: none;
+        z-index: 999;
     }
-    .heart::before,
-    .heart::after {
-        content: '';
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background: red;
-        border-radius: 50%;
+    @keyframes glow {
+        from { text-shadow: 0 0 10px #fff, 0 0 20px #ff4d88; }
+        to { text-shadow: 0 0 20px #fff, 0 0 40px #ff1a66; }
     }
-    .heart::before { top: -10px; left: 0; }
-    .heart::after { left: -10px; top: 0; }
-    @keyframes fall {
-        to { transform: translateY(100vh) rotate(45deg); opacity: 0; }
+    .emoji {
+        position: fixed;
+        font-size: 2rem;
+        pointer-events: none;
+        animation: floatUp 5s linear forwards;
+        z-index: 100;
+    }
+    @keyframes floatUp {
+        to {
+            transform: translateY(-120vh);
+            opacity: 0;
+        }
     }
 </style>
 </head>
 <body>
-<h1>Nisa, benimle barışır mısın? ❤️</h1>
-<div id="message"></div>
-<button onclick="heartsRain()">Barış ❤️</button>
-<button onclick="alert('Düşünme bile, barışalım 😄')">Düşüneyim 🤔</button><script>
-const text = `Nisa, sana iki kere yanlış tepki verdim ve bu seni kırdı, farkındayım…
-İnan bana, o anlarda seni üzmek gibi bir niyetim yoktu. Bazen kelimelerim, içimdeki sevgiyi tam olarak anlatamıyor.
-Ama bil ki sen, hayatımda en değer verdiğim insansın. 
 
-Senin gülüşün içimi ısıtan güneş gibi, sesin beni huzura kavuşturan bir melodi gibi… Senin varlığın bana güç veriyor.
-Hatalarım olabilir, çünkü insanım. Ama seni üzmek, içimde en ağır yüklerden biri olur.
+<h1>Nisa, benimle barışır mısın? 💖</h1>
+<button onclick="celebrate()">Barış ❤️</button>
 
-Şu an bana trip atıyorsun ve belki de haklısın… ama bil ki ben bu triplerini bile seviyorum.
-Çünkü seninle ilgili her şey bana güzel geliyor. Kızgın halin bile. Çünkü o bile, bana değer verdiğini gösteriyor.
+<div class="celebrate-text" id="celebrateText">Barıştık 💖</div>
 
-Sana söz veriyorum Nisa… Bundan sonra kelimelerimi daha dikkatle seçeceğim.
-Seni kırmamak için elimden geleni yapacağım. Çünkü senin mutluluğun, benim mutluluğum.
+<script>
+function createEmoji(symbol) {
+    const emoji = document.createElement("div");
+    emoji.classList.add("emoji");
+    emoji.style.left = Math.random() * 100 + "vw";
+    emoji.style.top = "100vh";
+    emoji.textContent = symbol;
+    emoji.style.fontSize = (Math.random() * 20 + 20) + "px";
+    document.body.appendChild(emoji);
+    setTimeout(() => emoji.remove(), 5000);
+}
 
-Bana güvenmeni istiyorum. Çünkü ben seni sadece sevmedim, sana bağlandım, seninle kendimi tamam hissediyorum.`;
+function celebrate() {
+    // Göster yazıyı
+    document.getElementById("celebrateText").style.display = "block";
+    setTimeout(() => {
+        document.getElementById("celebrateText").style.display = "none";
+    }, 5000);
 
-let i = 0;
-function typeWriter() {
-    if (i < text.length) {
-        document.getElementById("message").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 40);
+    // Konfeti efekti
+    for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+            createEmoji("🎊");
+        }, i * 20);
+    }
+
+    // Kalpler
+    for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+            createEmoji("❤️");
+        }, i * 50);
+    }
+
+    // Yıldızlar
+    for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+            createEmoji("✨");
+        }, i * 80);
+    }
+
+    // Kelebekler
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            createEmoji("🦋");
+        }, i * 100);
     }
 }
-typeWriter();
+</script>
 
-function heartsRain() {
+</body>
+</html>function heartsRain() {
     for (let j = 0; j < 30; j++) {
         let heart = document.createElement("div");
         heart.className = "heart";
